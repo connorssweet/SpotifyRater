@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>All Albums</h2>
+
+<form class="mb-3" method="GET" action="{{ url_for('search') }}">
+    <input type="text" name="q" placeholder="Search by album or artist" class="form-control" value="{{ request.args.get('q','') }}">
+    <button class="btn btn-primary mt-2">Search</button>
+    <a href="{{ url_for('add_album') }}" class="btn btn-secondary mt-2">Add Album</a>
+</form>
+
+<div class="row">
+{% for album in albums %}
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            {% if album.cover_url %}
+                <img src="{{ album.cover_url }}" class="card-img-top" alt="Cover">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ album.title }}</h5>
+                <p class="card-text">{{ album.artist }}</p>
+                {% if album.ratings %}
+                    <p>Average Rating: {{ (album.ratings|map(attribute='score')|sum / album.ratings|length)|round(1) }}/5</p>
+                {% else %}
+                    <p>No ratings yet</p>
+                {% endif %}
+                <a href="{{ url_for('album_detail', album_id=album.id) }}" class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Add Album by Spotify Link</h2>
+<form method="POST" class="w-50">
+    <div class="mb-3">
+        <label>Spotify album link or URI</label>
+        <input type="text" name="spotify_link" class="form-control" placeholder="https://open.spotify.com/album/<id> or spotify:album:<id>" required>
+    </div>
+    <button type="submit" class="btn btn-success">Add Album</button>
+</form>
+{% endblock %}
